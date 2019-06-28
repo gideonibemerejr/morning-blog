@@ -30,8 +30,15 @@ export default class Main extends Component {
     })
   }
 
-  handleDeletePost = () => {
-    alert('Delete button clicked')
+  handleDeletePost = postIdx => {
+    // ! we cant mutate state directly
+    // TODO: we need to remove the object from state
+    // * Here we create a new array from filtering out the post in our state.posts array that matches the index of the post we clicked
+    const newStateArray = this.state.posts.filter(
+      (elem, idx) => idx !== postIdx
+    )
+
+    this.setState({ posts: newStateArray })
   }
   // handleClick = e => {
   //   this.state.name === 'Gideon'
@@ -46,7 +53,13 @@ export default class Main extends Component {
           <h3>{post.title}</h3>
           <h5>By: {post.author}</h5>
           <h6>{post.body}</h6>
-          <button onClick={this.handleDeletePost}>Delete</button>
+          <button
+            onClick={() => {
+              this.handleDeletePost(index)
+            }}
+          >
+            Delete
+          </button>
         </li>
       )
     })
