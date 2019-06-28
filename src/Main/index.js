@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import Form from '../Form'
 
 export default class Main extends Component {
   state = {
-    post: [
+    isPosting: true,
+    posts: [
       {
         title: 'My Day',
         author: 'Gideon',
@@ -17,20 +19,34 @@ export default class Main extends Component {
       }
     ]
   }
-
   handleClick = e => {
-    this.state.name === 'Gideon'
-      ? this.setState({ name: 'Not Gideon' })
-      : this.setState({ name: 'Gideon' })
+    this.setState({
+      isPosting: !this.state.isPosting
+    })
+  }
+  handleAddPost = ({ title, author, body }) => {
+    this.setState({
+      posts: [{ title, author, body }, ...this.state.posts]
+    })
   }
 
+  handleDeletePost = () => {
+    alert('Delete button clicked')
+  }
+  // handleClick = e => {
+  //   this.state.name === 'Gideon'
+  //     ? this.setState({ name: 'Not Gideon' })
+  //     : this.setState({ name: 'Gideon' })
+  // }
+
   render() {
-    const posts = this.state.post.map((post, index) => {
+    const posts = this.state.posts.map((post, index) => {
       return (
-        <li >
+        <li key={index}>
           <h3>{post.title}</h3>
-          <h6>By: {post.author}</h6>
-          <p>{post.body}</p>
+          <h5>By: {post.author}</h5>
+          <h6>{post.body}</h6>
+          <button onClick={this.handleDeletePost}>Delete</button>
         </li>
       )
     })
@@ -41,6 +57,10 @@ export default class Main extends Component {
           <h1>Party Blog</h1>
         </header>
         <section>
+          <button onClick={this.handleClick}>Toggle</button>
+          {!!this.state.isPosting ? (
+            <Form handleAddPost={this.handleAddPost} />
+          ) : null}
           <ul>{posts}</ul>
         </section>
       </>
