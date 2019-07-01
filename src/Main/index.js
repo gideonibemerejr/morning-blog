@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Form from '../Form'
+import BlogPost from '../BlogPost'
+import Button from '../Button'
 
 export default class Main extends Component {
   state = {
-    isPosting: true,
+    isPosting: false,
     posts: [
       {
         title: 'My Day',
@@ -49,18 +51,12 @@ export default class Main extends Component {
   render() {
     const posts = this.state.posts.map((post, index) => {
       return (
-        <li key={index}>
-          <h3>{post.title}</h3>
-          <h5>By: {post.author}</h5>
-          <h6>{post.body}</h6>
-          <button
-            onClick={() => {
-              this.handleDeletePost(index)
-            }}
-          >
-            Delete
-          </button>
-        </li>
+        <BlogPost
+          handleDeletePost={this.handleDeletePost}
+          {...post}
+          key={index}
+          index={index}
+        />
       )
     })
 
@@ -70,7 +66,7 @@ export default class Main extends Component {
           <h1>Party Blog</h1>
         </header>
         <section>
-          <button onClick={this.handleClick}>Toggle</button>
+          <Button handleClick={this.handleClick} type={'Toggle'} />
           {!!this.state.isPosting ? (
             <Form handleAddPost={this.handleAddPost} />
           ) : null}
