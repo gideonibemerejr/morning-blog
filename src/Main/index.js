@@ -2,35 +2,26 @@ import React, { Component } from 'react'
 import Form from '../Form'
 import BlogPost from '../BlogPost'
 import Button from '../Button'
-
+//import { index, create } from '../services/services'
 export default class Main extends Component {
   state = {
     isPosting: false,
-    posts: [
-      {
-        title: 'My Day',
-        author: 'Gideon',
-        body:
-          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit nisi repellat ipsa, cupiditate voluptate quae quam voluptatum dicta culpa qui reiciendis nostrum obcaecati mollitia similique fuga aliquid repellendus! Explicabo minima deleniti rem tenetur. Accusamus, perferendis tempore mollitia molestiae sit officiis praesentium facere at veniam tempora eaque hic! Cupiditate id illum quisquam, nobis quos dolorum esse recusandae ab voluptatum numquam impedit officiis distinctio nostrum. Quidem rerum et eligendi magni ad, minus laboriosam aspernatur sed earum laborum explicabo ducimus harum eveniet nisi soluta quis nam. Expedita quod quos modi commodi doloremque culpa, nesciunt in! Minus dolorem ducimus voluptatem recusandae quam excepturi ea?'
-      },
-      {
-        title: 'My Day',
-        author: 'Andrew',
-        body:
-          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit nisi repellat ipsa, cupiditate voluptate quae quam voluptatum dicta culpa qui reiciendis nostrum obcaecati mollitia similique fuga aliquid repellendus! Explicabo minima deleniti rem tenetur. Accusamus, perferendis tempore mollitia molestiae sit officiis praesentium facere at veniam tempora eaque hic! Cupiditate id illum quisquam, nobis quos dolorum esse recusandae ab voluptatum numquam impedit officiis distinctio nostrum. Quidem rerum et eligendi magni ad, minus laboriosam aspernatur sed earum laborum explicabo ducimus harum eveniet nisi soluta quis nam. Expedita quod quos modi commodi doloremque culpa, nesciunt in! Minus dolorem ducimus voluptatem recusandae quam excepturi ea? Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat sapiente atque nostrum, officiis at possimus distinctio eaque esse ipsum aperiam pariatur maxime sequi optio voluptate quo, necessitatibus obcaecati nobis ducimus nemo sit in voluptatum est a.'
-      }
-    ]
+    posts: []
   }
+  handleGet
   handleClick = e => {
     this.setState({
       isPosting: !this.state.isPosting
     })
   }
-  handleAddPost = ({ title, author, body }) => {
-    this.setState({
-      posts: [{ title, author, body }, ...this.state.posts]
-    })
-  }
+
+  // async handleAddPost(post) {
+  //   await create({
+  //     title: post.title[0],
+  //     author: post.author[0],
+  //     body: post.body[0]
+  //   })
+  // }
 
   handleDeletePost = postIdx => {
     // ! we cant mutate state directly
@@ -48,13 +39,22 @@ export default class Main extends Component {
   //     : this.setState({ name: 'Gideon' })
   // }
 
+  // async handleGetPosts() {
+  //   const posts = await index()
+  //   this.setState({ posts })
+  // }
+
+  async componentDidMount() {
+    
+  }
+
   render() {
     const posts = this.state.posts.map((post, index) => {
       return (
         <BlogPost
           handleDeletePost={this.handleDeletePost}
           {...post}
-          key={index}
+          key={post._id}
           index={index}
         />
       )

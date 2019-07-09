@@ -9,9 +9,9 @@ function BlogPost({ title, author, body, index, handleDeletePost }) {
       <h5>By: {author}</h5>
       <h6>{body}</h6>
       <Button
+        type={'Delete'}
         index={index}
         handleDeletePost={handleDeletePost}
-        type={'Delete'}
       />
     </li>
   )
