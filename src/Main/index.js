@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Form from '../Form'
 import BlogPost from '../BlogPost'
 import Button from '../Button'
-//import { index, create } from '../services/services'
+
 export default class Main extends Component {
   state = {
     isPosting: false,
@@ -15,13 +15,32 @@ export default class Main extends Component {
     })
   }
 
-  // async handleAddPost(post) {
-  //   await create({
-  //     title: post.title[0],
-  //     author: post.author[0],
-  //     body: post.body[0]
-  //   })
-  // }
+  handleAddPost = ({ title, author, body }) => {
+    console.log(title, author, body)
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ title, author, body })
+    }
+
+    async function createPost() {
+      try {
+        const sendPost = await fetch('http://localhost:8000/api/posts', options)
+        const postResult = await sendPost.json()
+        return await postResult
+      } catch (error) {
+        console.log('line 31', error)
+      }
+    }
+
+    createPost().then(result =>
+      this.setState({
+        posts: [{ result }, ...this.state.posts]
+      })
+    )
+  }
 
   handleDeletePost = postIdx => {
     // ! we cant mutate state directly
@@ -44,8 +63,8 @@ export default class Main extends Component {
   //   this.setState({ posts })
   // }
 
-  async componentDidMount() {
-    
+  componentDidMount() {
+    getPosts().then(results => this.setState({ posts: results }))
   }
 
   render() {
@@ -74,5 +93,15 @@ export default class Main extends Component {
         </section>
       </>
     )
+  }
+}
+
+async function getPosts() {
+  try {
+    const fetchPosts = await fetch('http://localhost:8000/api/posts')
+    const data = fetchPosts.json()
+    return await data
+  } catch (error) {
+    console.log('line 80', error)
   }
 }

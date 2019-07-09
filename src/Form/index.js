@@ -11,7 +11,7 @@ export default class Form extends Component {
 
   handleChange = e => {
     this.setState({
-      [e.currentTarget.name]: [e.currentTarget.value]
+      [e.currentTarget.name]: e.currentTarget.value
     })
   }
   handleSubmit = e => {

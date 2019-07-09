@@ -1,4 +1,4 @@
-const url = 'http://localhost:3001/api/posts'
+const url = 'http://localhost:8000/api/posts'
 
 module.exports = {
   index,
